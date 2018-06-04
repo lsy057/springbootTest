@@ -1,5 +1,7 @@
 package com.springboot.project.solarpro.controller;
 
+import com.springboot.project.solarpro.core.ret.RetResponse;
+import com.springboot.project.solarpro.core.ret.RetResult;
 import com.springboot.project.solarpro.model.UserInfo;
 import com.springboot.project.solarpro.service.UserInfoService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +23,9 @@ public class UserInfoController {
     }
 
     @PostMapping("/selectById")
-    public UserInfo selectById(Integer id){
-        return userInfoService.selectById(id);
+    public RetResult<UserInfo> selectById(Integer id){
+        UserInfo userInfo = userInfoService.selectById(id);
+        return RetResponse.makeOKRsp(userInfo);
     }
+
 }
