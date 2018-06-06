@@ -1,15 +1,28 @@
 package com.springboot.project.solarpro.model;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+
 public class UserInfo {
-    private int id;
+    /**
+     * 主键
+     */
+    @Id
+    private String id;
+
+    /**
+     * 用户名
+     */
+    @Column(name = "user_name")
     private String userName;
+
     private String password;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
