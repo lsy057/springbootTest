@@ -2,9 +2,11 @@ package com.springboot.project.solarpro.controller;
 
 
 import com.springboot.project.solarpro.model.UserInfo;
+import com.springboot.project.solarpro.service.ShiroService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("shiroUtils")
 public class ShiroUtilsController {
+
+    @Autowired
+    private ShiroService shiroService;
 
     @GetMapping("/noLogin")
     public void noLogin() {
@@ -32,4 +37,12 @@ public class ShiroUtilsController {
         return u;
     }
 
+    /**
+     * @Description: 重新加载shiro权限
+     * @throws Exception
+     */
+    @PostMapping("/updatePermission")
+    public void updatePermission() throws Exception {
+        shiroService.updatePermission();
+    }
 }
