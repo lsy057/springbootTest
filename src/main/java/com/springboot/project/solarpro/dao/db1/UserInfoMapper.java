@@ -1,10 +1,7 @@
-package com.springboot.project.solarpro.dao;
+package com.springboot.project.solarpro.dao.db1;
 
 import com.springboot.project.solarpro.core.universal.Mapper;
 import com.springboot.project.solarpro.model.UserInfo;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 public interface UserInfoMapper extends Mapper<UserInfo> {
 

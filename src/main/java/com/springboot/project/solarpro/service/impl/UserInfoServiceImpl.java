@@ -1,16 +1,13 @@
 package com.springboot.project.solarpro.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.springboot.project.solarpro.core.ret.ServiceException;
 import com.springboot.project.solarpro.core.universal.AbstractService;
-import com.springboot.project.solarpro.dao.UserInfoMapper;
+import com.springboot.project.solarpro.dao.db1.UserInfoMapper;
 import com.springboot.project.solarpro.model.UserInfo;
 import com.springboot.project.solarpro.service.UserInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Service
 public class UserInfoServiceImpl extends AbstractService<UserInfo> implements UserInfoService{
