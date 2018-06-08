@@ -2,6 +2,7 @@ package com.springboot.project.solarpro.core.aop;
 
 import com.alibaba.fastjson.JSON;
 import com.springboot.project.solarpro.core.ret.ServiceException;
+import com.springboot.project.solarpro.core.systemlog.SystemLogQueue;
 import com.springboot.project.solarpro.core.utils.ApplicationUtils;
 import com.springboot.project.solarpro.model.SystemLog;
 import com.springboot.project.solarpro.model.UserInfo;
@@ -39,7 +40,7 @@ public class AspectLog {
     private static final Logger logger = LoggerFactory.getLogger(AspectLog.class);
 
     @Resource
-    private SystemLogService systemLogService;
+    private SystemLogQueue systemLogQueue;
 
     /**
      * 定义切点
@@ -52,7 +53,7 @@ public class AspectLog {
     public void doBefore(JoinPoint p) throws Exception{
         SystemLog systemLog = getSystemLogInit(p);
         systemLog.setLogType(SystemLog.LOGINFO);
-        systemLogService.insert(systemLog);
+        systemLogQueue.add(systemLog);
     }
 
     /**
@@ -69,7 +70,7 @@ public class AspectLog {
                 systemLog.setLogType(SystemLog.LOGERROR);
                 systemLog.setExceptionCode(e.getClass().getName());
                 systemLog.setExceptionDetail(e.getMessage());
-                systemLogService.insert(systemLog);
+                systemLogQueue.add(systemLog);
             } catch (Exception ex) {
                 logger.error("==异常通知异常==");
                 logger.error("异常信息:{}", ex.getMessage());
