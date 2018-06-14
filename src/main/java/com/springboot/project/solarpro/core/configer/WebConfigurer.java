@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4;
+import com.springboot.project.solarpro.core.interceptor.Interceptor1;
 import com.springboot.project.solarpro.core.ret.RetCode;
 import com.springboot.project.solarpro.core.ret.RetResult;
 import com.springboot.project.solarpro.core.ret.ServiceException;
@@ -18,8 +19,10 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +35,11 @@ import java.util.List;
 @Configuration
 public class WebConfigurer extends WebMvcConfigurationSupport {
     private Logger LOGGER = LoggerFactory.getLogger(WebConfigurer.class);
+
+    /**
+     * TODO  修改为自己的需求
+     */
+    private static final String IZATION = "CHUCHEN";
     /**
      * 修改自定义消息转换器
      * @param converters
@@ -185,5 +193,57 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
                 .addResourceLocations("classpath:/META-INF/resources/favicon.ico");
         super.addResourceHandlers(registry);
     }
+
+//    添加拦截器功能
+    /**
+     * 添加拦截器  请求头拦截
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(
+                //注意，HandlerInterceptorAdapter  这里可以修改为自己创建的拦截器
+                /*new HandlerInterceptorAdapter() {
+                    @Override
+                    public boolean preHandle(HttpServletRequest request,
+                                             HttpServletResponse response, Object handler) throws Exception {
+                        String ization = request.getHeader("ization");
+                        if(IZATION.equals(ization)){
+                            return true;
+                        }else{
+                            RetResult<Object> result = new RetResult<>();
+                            result.setCode(RetCode.UNAUTHORIZED).setMsg("签名认证失败");
+                            responseResult(response, result);
+                            return false;
+                        }
+                    }
+                }*/
+                new Interceptor1() {
+                    @Override
+                    public boolean preHandle(HttpServletRequest request,
+                                             HttpServletResponse response, Object handler) throws Exception {
+                        String ization = request.getHeader("ization");
+                        if(IZATION.equals(ization)){
+                            return true;
+                        }else{
+                            RetResult<Object> result = new RetResult<>();
+                            result.setCode(RetCode.UNAUTHORIZED).setMsg("签名认证失败");
+                            responseResult(response, result);
+                            return false;
+                        }
+                    }
+                }
+                //这里添加的是拦截的路径  /**为全部拦截
+        ).addPathPatterns("/userInfo/selectAll");
+    }
+    /*private void responseResult(HttpServletResponse response, RetResult<Object> result) {
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Content-type", "application/json;charset=UTF-8");
+        response.setStatus(200);
+        try {
+            response.getWriter().write(JSON.toJSONString(result, SerializerFeature.WriteMapNullValue));
+        } catch (IOException ex) {
+            LOGGER.error(ex.getMessage());
+        }
+    }*/
 
 }
