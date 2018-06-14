@@ -8,6 +8,7 @@ import com.springboot.project.solarpro.service.UserInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class UserInfoServiceImpl extends AbstractService<UserInfo> implements UserInfoService{
@@ -33,5 +34,9 @@ public class UserInfoServiceImpl extends AbstractService<UserInfo> implements Us
         PageInfo<UserInfo> pageInfo = new PageInfo<>(userInfoList);
         return pageInfo;
     }*/
+    @Override
+    public List<UserInfo> selectAlla(int pageNum, int pageSize) {
+        return userInfoMapper.selectAll(pageNum,pageSize);
+    }
 
 }
