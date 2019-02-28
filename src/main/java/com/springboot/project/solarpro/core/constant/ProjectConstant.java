@@ -26,4 +26,10 @@ public class ProjectConstant {
 	//文件上传储存的地址
 	public static final String SAVEFILEPATH = "E://img";
 
+	public static final String USERTYPE = "1";
+	public static final String LOGINUSER = "2";
+	public static final String SUPERADMIN = "3";
+
+
+
 }
