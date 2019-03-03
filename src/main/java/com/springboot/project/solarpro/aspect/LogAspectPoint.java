@@ -34,15 +34,15 @@ public class LogAspectPoint {
     private  static  final Logger logger = LoggerFactory.getLogger(LogAspectPoint. class);
 
     //Controller层切点，这里如果需要配置多个切入点用“||”
-    @Pointcut("execution(* com.springboot.project.solarpro.*.login(..))"
-            + "||execution(* com.springboot.project.solarpro.*.save*(..))"
-            + "||execution(* com.springboot.project.solarpro.*.add*(..))"
-            + "||execution(* com.springboot.project.solarpro.*.insert*(..))"
-            + "||execution(* com.springboot.project.solarpro.*.del*(..))"
-            + "||execution(* com.springboot.project.solarpro.*.remove*(..))"
-            + "||execution(* com.springboot.project.solarpro.*.new*(..))"
-            + "||execution(* com.springboot.project.solarpro.*.edit*(..))"
-            + "||execution(* com.springboot.project.solarpro.*.update*(..))")
+    @Pointcut("execution(* com.springboot.project.solarpro.controller.*.login(..))"
+            + "||execution(* com.springboot.project.solarpro.controller.*.save*(..))"
+            + "||execution(* com.springboot.project.solarpro.controller.*.add*(..))"
+            + "||execution(* com.springboot.project.solarpro.controller.*.insert*(..))"
+            + "||execution(* com.springboot.project.solarpro.controller.*.del*(..))"
+            + "||execution(* com.springboot.project.solarpro.controller.*.remove*(..))"
+            + "||execution(* com.springboot.project.solarpro.controller.*.new*(..))"
+            + "||execution(* com.springboot.project.solarpro.controller.*.edit*(..))"
+            + "||execution(* com.springboot.project.solarpro.controller.*.update*(..))")
     public void controllerAspect() {
     }
 
@@ -60,7 +60,7 @@ public class LogAspectPoint {
     }
 
     //配置controller环绕通知,使用在方法aspect()上注册的切入点
-    // @Around("controllerAspect()")
+     @Around("controllerAspect()")
     public void around(JoinPoint joinPoint){
         System.out.println("==========开始执行controller环绕通知===============");
         long start = System.currentTimeMillis();

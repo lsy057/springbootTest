@@ -7,26 +7,26 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-	http://www.springframework.org/schema/aop   http://www.springframework.org/schema/aop/spring-aop.xsd
-	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	http://www.springframework.org/schema/aop   http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <!--<bean id="logAspect" class="com.springboot.project.solarpro.aspect.LogAspect"/>
+    <bean id="logAspect" class="com.springboot.project.solarpro.aspect.LogAspect"/>
     <bean id="div" class="com.springboot.project.solarpro.aspect.Div"/>
--->
-    <!--<aop:config>
+    <aop:config>
         <aop:aspect id="time" ref="logAspect">
-            <aop:pointcut id="addAllMethod" expression="execution(* com.springboot.project.solarpro.aspect.Div.*(..))" />
-            <aop:before method="logStart" pointcut-ref="addAllMethod" />
-            <aop:after method="logEnd" pointcut-ref="addAllMethod" />
+            <aop:pointcut id="log" expression="execution(* *.*(..))" />
+            <aop:before method="logStart" pointcut-ref="log" />
+            <aop:after method="logEnd" pointcut-ref="log" />
+            <aop:after-returning method="logReturn" pointcut-ref="log" returning="result"/>
+            <aop:after-throwing method="logException" pointcut-ref="log" throwing="exception"/>
         </aop:aspect>
-    </aop:config>-->
+    </aop:config>
 
     <!--<mvc:annotation-driven />-->
     <!-- 激活组件扫描功能,在包cn.edu.pzxx.scampus及其子包下面自动扫描通过注解配置的组件-->
-    <context:component-scan base-package="com.springboot.project.solarpro" />
-    <!-- 启动对@AspectJ注解的支持 -->
-    <!-- proxy-target-class等于true是强制使用cglib代理，proxy-target-class默认是false，如果你的类实现了接口 就走JDK代理，如果没有，走cglib代理  -->
-    <!-- 注：对于单利模式建议使用cglib代理，虽然JDK动态代理比cglib代理速度快，但性能不如cglib -->
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <!--<context:component-scan base-package="com.springboot.project.solarpro" />
+    &lt;!&ndash; 启动对@AspectJ注解的支持 &ndash;&gt;
+    &lt;!&ndash; proxy-target-class等于true是强制使用cglib代理，proxy-target-class默认是false，如果你的类实现了接口 就走JDK代理，如果没有，走cglib代理  &ndash;&gt;
+    &lt;!&ndash; 注：对于单利模式建议使用cglib代理，虽然JDK动态代理比cglib代理速度快，但性能不如cglib &ndash;&gt;
+    <aop:aspectj-autoproxy proxy-target-class="true"/>-->
 
 </beans>
